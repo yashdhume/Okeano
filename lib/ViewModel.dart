@@ -1,11 +1,9 @@
 import 'package:okeano/data/FirebaseData.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'data/Parser.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
-import 'dart:convert';
 import 'package:okeano/data/Product.dart';
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ViewModel extends Model {
   List<String> urls = [
@@ -47,4 +45,12 @@ class ViewModel extends Model {
     notifyListeners();
     return a;
   }
+  Future totalLength(String collection) async {
+    var respectsQuery = Firestore.instance
+        .collection(collection);
+    var querySnapshot = await respectsQuery.getDocuments();
+    var total = querySnapshot.documents.length;
+    return total;
+  }
+
 }

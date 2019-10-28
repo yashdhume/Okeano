@@ -7,7 +7,6 @@ import '../ViewModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:okeano/ui/ProductWidgets/StackableSwiper.dart';
 import 'package:flutter/services.dart';
-import 'package:okeano/data/Product.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -88,15 +87,33 @@ class _HomePage extends State<HomePage> {
                   ),
                   SliverToBoxAdapter(child: SubTitle(title: "Featured")),
                   SliverToBoxAdapter(
-                      child:  StackableSwiper()),
+                    child: StreamBuilder(
+                      stream:
+                          Firestore.instance.collection('featured').snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) return CircularProgressIndicator();
+                        return StackableSwiper(snapshot: snapshot);
+                      },
+                    ),
+                  ),
                   SliverToBoxAdapter(
                       child: SubTitle(title: "Recommed for you")),
                   SliverList(
+
                       delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                      return ProductList(index: index);
+
+                      return StreamBuilder(
+                          stream: Firestore.instance
+                              .collection('reccomended')
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) CircularProgressIndicator();
+                            return ProductList(index: index, snapshot: snapshot);
+                          });
                     },
-                    childCount: model.urls.length,
+                    //childCount: Future.value(Firestore.instance.collection('products').snapshots().length),
+                        childCount: 8
                   ))
                 ],
               ),

@@ -4,7 +4,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:okeano/data/Product.dart';
 import '../data/Parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:okeano/ui/ProductInfoPage.dart';
+import 'package:okeano/ui/ProductWidgets/ProductInfoPage.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -19,7 +19,7 @@ class _Search extends State<Search> {
   final TextStyle dropdownMenuItem =
       TextStyle(color: Colors.black, fontSize: 18);
   String searchQuery;
-  bool isOn=false;
+  bool isOn = false;
 
   final primary = Color(0xff4169E1);
   final secondary = Colors.white;
@@ -65,13 +65,14 @@ class _Search extends State<Search> {
       ),
     );
   }
-  Widget _indicator (){
-    if(isOn){
+
+  Widget _indicator() {
+    if (isOn) {
       return CircularProgressIndicator();
-    }
-    else
+    } else
       return Text('');
   }
+
   Future<Null> _handleRefresh() async {
     count++;
     print(count);
@@ -185,9 +186,8 @@ class _Search extends State<Search> {
                                       model.updateSearchQuery(_myController);
                                       print(10);
                                       searchQuery = model.searchQuery;
-                                      isOn=true;
+                                      isOn = true;
                                     });
-
                                   },
                                   cursorColor: Theme.of(context).primaryColor,
                                   style: dropdownMenuItem,

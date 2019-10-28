@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:okeano/ui/ProductInfoPage.dart';
+import 'package:okeano/ui/ProductWidgets/ProductInfoPage.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:okeano/ViewModel.dart';
 
 class StackableSwiper extends StatelessWidget {
-  StackableSwiper();
+  StackableSwiper({this.snapshot});
+  AsyncSnapshot snapshot;
   @override
   Widget build(BuildContext context) {
+    var document = snapshot.data.documents;
     return ScopedModelDescendant<ViewModel>(
         rebuildOnChange: true,
         builder: (context, child, model) => Container(
                 child: Container(
               height: 340,
               child: Swiper(
-                pagination: new SwiperPagination(),
+                //pagination: new SwiperPagination(),
                 viewportFraction: 0.5,
                 scale: 0.5,
                 itemWidth: 300.0,
                 itemHeight: 400.0,
                 layout: SwiperLayout.DEFAULT,
                 fade: 0.0,
+                autoplay: true,
+                //autoplayDelay: 1,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
                     children: <Widget>[
@@ -29,7 +33,12 @@ class StackableSwiper extends StatelessWidget {
                             Navigator.of(context).push(MaterialPageRoute<Null>(
                                 builder: (BuildContext context) {
                               return ProductInfoPage(
-                                image: model.urls[index],
+                                image: document[index]['image'],
+                                name: document[index]['name'],
+                                store: document[index]['store'],
+                                description: document[index]['description'],
+                                price: document[index]['price'],
+                                url: document[index]['url'],
                                 index: index,
                                 which: 0,
                               );
@@ -44,7 +53,7 @@ class StackableSwiper extends StatelessWidget {
                                         topLeft: Radius.circular(10.0),
                                         topRight: Radius.circular(10.0)),
                                     image: DecorationImage(
-                                        image: NetworkImage(model.urls[index]),
+                                        image: NetworkImage(document[index]['image']),
                                         fit: BoxFit.cover)),
                               ))),
                       Container(
@@ -54,13 +63,13 @@ class StackableSwiper extends StatelessWidget {
                                   bottomLeft: Radius.circular(10.0),
                                   bottomRight: Radius.circular(10.0))),
                           child: ListTile(
-                            subtitle: Text("Somthing"),
-                            title: Text("Somthing else"),
+                            title: Text(document[index]['name']),
+                            subtitle: Text(document[index]['price']),
                           ))
                     ],
                   );
                 },
-                itemCount: model.urls.length,
+                itemCount: snapshot.data.documents.length,
               ),
             )));
   }
