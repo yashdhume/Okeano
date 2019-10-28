@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "26191770439",
+    "firebase_url": "https://okeano-1571677366143.firebaseio.com",
+    "project_id": "okeano-1571677366143",
+    "storage_bucket": "okeano-1571677366143.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26191770439:android:23d6a96df0e3b1db2f9262",
+        "android_client_info": {
+          "package_name": "com.yashdhume.okeano"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "26191770439-tmunjcptlk1l5qe0ehipclli8idt9mk9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEZABkFHH7FXETCzdJLBJlLdQhr5q-ri8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "26191770439-tmunjcptlk1l5qe0ehipclli8idt9mk9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "26191770439-hntflim3cpaha3cb38rt9eiaf2ifvbm9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.yashdhume.okeano"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
