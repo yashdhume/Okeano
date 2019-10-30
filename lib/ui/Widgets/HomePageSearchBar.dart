@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-class SearchBar extends StatelessWidget {
+import 'package:flutter/material.dart';
+
+class HomePageSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -9,20 +10,19 @@ class SearchBar extends StatelessWidget {
         keyboardType: TextInputType.text,
         placeholder: 'Search',
         placeholderStyle: TextStyle(
-          color: Color(0xffC4C6CC),
+          color: Colors.grey,
           fontSize: 14.0,
         ),
         prefix: Padding(
-          padding:
-          const EdgeInsets.fromLTRB(9.0, 6.0, 9.0, 6.0),
+          padding: const EdgeInsets.fromLTRB(9.0, 6.0, 9.0, 6.0),
           child: Icon(
             Icons.search,
-            color: Color(0xffC4C6CC),
+            color: Colors.grey,
           ),
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
-          color: Color(0xffF0F1F5),
+          color: Colors.white,
         ),
       ),
     );

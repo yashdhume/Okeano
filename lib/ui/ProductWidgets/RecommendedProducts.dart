@@ -3,8 +3,9 @@ import 'package:okeano/ui/ProductWidgets/ProductInfoPage.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:okeano/ViewModel.dart';
 
-class ProductList extends StatelessWidget {
-  ProductList({this.index, this.snapshot});
+// ignore: must_be_immutable
+class RecommendedProducts extends StatelessWidget {
+  RecommendedProducts({this.index, this.snapshot});
 
   AsyncSnapshot snapshot;
   int index;
@@ -37,11 +38,11 @@ class ProductList extends StatelessWidget {
                 child: ListTile(
                   trailing: IconButton(
                     icon: Icon(Icons.favorite),
+                    onPressed: () {},
                   ),
                   leading: Hero(
                       tag: "1 product $index",
                       child: CircleAvatar(
-                        //radius: 0,
                         backgroundImage: NetworkImage(document[index]['image']),
                       )),
                   title: Text(

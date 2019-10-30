@@ -5,7 +5,16 @@ class Product {
   final String url;
   final String store;
   final String image;
-  Product({this.name, this.description, this.price, this.url, this.store, this.image});
+
+  Product(
+      {this.name,
+      this.description,
+      this.price,
+      this.url,
+      this.store,
+      this.image});
+
+  // ignore: sort_constructors_first
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       name: json['name'] as String,

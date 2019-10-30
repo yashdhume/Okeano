@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:okeano/ui/ProductWidgets/ProductList.dart';
-import 'package:okeano/ui/ProductWidgets/SubTitle.dart';
+import 'package:okeano/ui/ProductWidgets/RecommendedProducts.dart';
+import 'package:okeano/ui/Widgets/SliverTabs.dart';
 import '../ViewModel.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:okeano/ui/ProductWidgets/StackableSwiper.dart';
+import 'package:okeano/ui/ProductWidgets/FeaturedProducts.dart';
 import 'package:flutter/services.dart';
+import 'package:okeano/ui/Widgets/HomePageSearchBar.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,9 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
-  var location = 0.0;
-  bool a = false;
-
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<ViewModel>(
@@ -36,14 +33,6 @@ class _HomePage extends State<HomePage> {
                     snap: true,
                     flexibleSpace: LayoutBuilder(builder:
                         (BuildContext context, BoxConstraints constraints) {
-                      location = constraints.biggest.height;
-
-                      if (constraints.biggest.height == 100.0) {
-                        a = true;
-                      } else {
-                        a = false;
-                      }
-
                       return FlexibleSpaceBar(
                         centerTitle: true,
                         title: Image.network(
@@ -54,67 +43,44 @@ class _HomePage extends State<HomePage> {
                           children: <Widget>[
                             SizedBox(height: 60.0),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  16.0, 6.0, 16.0, 16.0),
-                              child: Container(
-                                width: double.infinity,
-                                child: CupertinoTextField(
-                                  keyboardType: TextInputType.text,
-                                  placeholder: 'Search',
-                                  placeholderStyle: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14.0,
-                                  ),
-                                  prefix: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        9.0, 6.0, 9.0, 6.0),
-                                    child: Icon(
-                                      Icons.search,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
+                                padding: const EdgeInsets.fromLTRB(
+                                    16.0, 6.0, 16.0, 16.0),
+                                child: HomePageSearchBar()),
                           ],
                         ),
                       );
                     }),
                   ),
-                  SliverToBoxAdapter(child: SubTitle(title: "Featured")),
+                  SliverToBoxAdapter(child: SliverTabs(title: "Featured")),
                   SliverToBoxAdapter(
                     child: StreamBuilder(
                       stream:
                           Firestore.instance.collection('featured').snapshots(),
                       builder: (context, snapshot) {
-                        if (!snapshot.hasData) return CircularProgressIndicator();
-                        return StackableSwiper(snapshot: snapshot);
+                        if (!snapshot.hasData) {
+                          return CircularProgressIndicator();
+                        }
+                        return FeaturedProducts(snapshot: snapshot);
                       },
                     ),
                   ),
                   SliverToBoxAdapter(
-                      child: SubTitle(title: "Recommed for you")),
+                      child: SliverTabs(title: "Recommed for you")),
                   SliverList(
-
                       delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-
-                      return StreamBuilder(
-                          stream: Firestore.instance
-                              .collection('reccomended')
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) CircularProgressIndicator();
-                            return ProductList(index: index, snapshot: snapshot);
-                          });
-                    },
-                    //childCount: Future.value(Firestore.instance.collection('products').snapshots().length),
-                        childCount: 8
-                  ))
+                          (BuildContext context, int index) {
+                    return StreamBuilder(
+                        stream: Firestore.instance
+                            .collection('reccomended')
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) CircularProgressIndicator();
+                          return RecommendedProducts(
+                              index: index, snapshot: snapshot);
+                        });
+                  },
+                          //childCount: Future.value(Firestore.instance.collection('products').snapshots().length),
+                          childCount: 8))
                 ],
               ),
             )));

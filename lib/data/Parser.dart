@@ -1,21 +1,12 @@
-import 'Product.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
-import 'package:jsonstreamreader/jsonstreamreader.dart';
 import 'dart:convert';
-Future<List<Product>> fetchPost(http.Client client, String product) async {
-  String link = 'http://vincentssecretspot.tk/okeano/products/'+product+'.json';
-  final response = await client.get(link);
-  if (response.statusCode == 200) {
-    return parse(response.body);
-  } else {
-    throw Exception('Failed to load post');
-  }
+import 'package:flutter/material.dart';
+import 'package:okeano/ui/Search.dart';
 
-}
-Future fetch(String product) async {
+Future fetchPost([howMany = 5]) async {
   final response = await http.get(
-      'http://vincentssecretspot.tk/okeano/products/'+product+'.json');
+      'http://vincentssecretspot.tk/okeano/products/' + searchQuery + '.json');
 
   if (response.statusCode == 200) {
     return json.decode(response.body);
@@ -23,8 +14,25 @@ Future fetch(String product) async {
     throw Exception('Failed to load post');
   }
 }
-List<Product> parse(String responseBody) {
-  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
 
-  return parsed.map<Product>((json) => Product.fromJson(json)).toList();
+Future loadPosts() async {
+  await fetchPost().then((res) async {
+    postsController.add(res);
+    return res;
+  });
+}
+
+Widget indicator() {
+  if (isOn) {
+    return CircularProgressIndicator();
+  } else {
+    return Text('');
+  }
+}
+Future<Null> handleRefresh() async {
+
+  await fetchPost(searchQuery).then((res) async {
+    postsController.add(res);
+    return null;
+  });
 }

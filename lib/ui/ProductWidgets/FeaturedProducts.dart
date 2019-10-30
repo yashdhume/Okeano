@@ -4,9 +4,12 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:okeano/ViewModel.dart';
 
-class StackableSwiper extends StatelessWidget {
-  StackableSwiper({this.snapshot});
+// ignore: must_be_immutable
+class FeaturedProducts extends StatelessWidget {
+  FeaturedProducts({this.snapshot});
+
   AsyncSnapshot snapshot;
+
   @override
   Widget build(BuildContext context) {
     var document = snapshot.data.documents;
@@ -16,7 +19,6 @@ class StackableSwiper extends StatelessWidget {
                 child: Container(
               height: 340,
               child: Swiper(
-                //pagination: new SwiperPagination(),
                 viewportFraction: 0.5,
                 scale: 0.5,
                 itemWidth: 300.0,
@@ -53,7 +55,8 @@ class StackableSwiper extends StatelessWidget {
                                         topLeft: Radius.circular(10.0),
                                         topRight: Radius.circular(10.0)),
                                     image: DecorationImage(
-                                        image: NetworkImage(document[index]['image']),
+                                        image: NetworkImage(
+                                            document[index]['image']),
                                         fit: BoxFit.cover)),
                               ))),
                       Container(

@@ -18,11 +18,11 @@ class _GoogleMaps extends State<GoogleMaps> {
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 10.0,
-          ),
+      onMapCreated: _onMapCreated,
+      initialCameraPosition: CameraPosition(
+        target: _center,
+        zoom: 10.0,
+      ),
     );
   }
 }

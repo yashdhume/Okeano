@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 class ProductInfoPage extends StatelessWidget {
-  const ProductInfoPage({Key key, this.image, this.index, this.which, this.name, this.price, this.store, this.description, this.url})
+  const ProductInfoPage(
+      {Key key,
+      this.image,
+      this.index,
+      this.which,
+      this.name,
+      this.price,
+      this.store,
+      this.description,
+      this.url})
       : super(key: key);
   final int index;
   final int which;
@@ -11,13 +21,15 @@ class ProductInfoPage extends StatelessWidget {
   final String description;
   final String store;
   final String url;
-  _launchURL(String url) async {
+
+  Future _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
       throw 'Could not launch $url';
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,14 +126,16 @@ class ProductInfoPage extends StatelessWidget {
                                   vertical: 8.0, horizontal: 16.0),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0)),
-                              onPressed: () {_launchURL(url);},
+                              onPressed: () {
+                                _launchURL(url);
+                              },
                               color: Colors.blueAccent,
                               textColor: Colors.white,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                     Text(
-                                      "Go to website",
+                                  Text(
+                                    "Go to website",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16.0),

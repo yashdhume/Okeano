@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:okeano/GoogleMaps/GoogleMaps.dart';
-import 'package:okeano/data/FirebaseData.dart';
+import 'package:okeano/GoogleMaps/TestGoogleMaps.dart';
 import 'package:okeano/ui/Search.dart';
 import '../ViewModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'HomePage.dart';
-import 'TestParser.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:okeano/data/Product.dart';
-import 'TestStreamer.dart';
 
 class MainPage extends StatefulWidget {
   _MainPage createState() => new _MainPage();
@@ -20,14 +15,15 @@ class _MainPage extends State<MainPage> {
   final List<Widget> _children = [
     HomePage(),
     Search(),
-    TestParser(),
-    GoogleMaps(),
-    SHIT(),
+    Search(),
+    TGoogleMaps(),
+    Search(),
   ];
-  void initState(){
 
+  void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<ViewModel>(
@@ -46,9 +42,6 @@ class _MainPage extends State<MainPage> {
                   ],
                   onTap: (index) {
                     setState(() {
-                      Product json;
-                      var a = getFirebase();
-                      print(a);
                       _currentIndex = index;
                     });
                   }),
