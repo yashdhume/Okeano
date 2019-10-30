@@ -22,7 +22,6 @@ class _Search extends State<Search> {
 
   @override
   void dispose() {
-    myController.dispose();
     timer?.cancel();
     super.dispose();
   }

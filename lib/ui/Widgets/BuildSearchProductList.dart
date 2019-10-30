@@ -5,7 +5,6 @@ import 'package:okeano/ui/ProductWidgets/ProductInfoPage.dart';
 Widget buildList(AsyncSnapshot snapshot, BuildContext context) {
   return Scrollbar(
       child: RefreshIndicator(
-    //onRefresh: () => handleRefresh(postsController),
     child: ListView.builder(
         physics: const AlwaysScrollableScrollPhysics(),
         itemCount: snapshot.data.length,
@@ -33,7 +32,6 @@ Widget buildList(AsyncSnapshot snapshot, BuildContext context) {
                   color: Colors.white,
                 ),
                 width: double.infinity,
-                height: 110,
                 margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Row(
@@ -68,9 +66,6 @@ Widget buildList(AsyncSnapshot snapshot, BuildContext context) {
                           ),
                           Row(
                             children: <Widget>[
-                              SizedBox(
-                                width: 1,
-                              ),
                               Text(product['price'])
                             ],
                           ),
@@ -79,9 +74,6 @@ Widget buildList(AsyncSnapshot snapshot, BuildContext context) {
                           ),
                           Row(
                             children: <Widget>[
-                              SizedBox(
-                                width: 5,
-                              ),
                               Text(product['store'])
                             ],
                           ),

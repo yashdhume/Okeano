@@ -5,7 +5,8 @@ import '../ViewModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'HomePage.dart';
-
+import 'package:okeano/ui/ProfilePage.dart';
+import 'package:okeano/ui/FavoritePage.dart';
 class MainPage extends StatefulWidget {
   _MainPage createState() => new _MainPage();
 }
@@ -15,9 +16,9 @@ class _MainPage extends State<MainPage> {
   final List<Widget> _children = [
     HomePage(),
     Search(),
-    Search(),
+    FavoritePage(),
     TGoogleMaps(),
-    Search(),
+    Profile(),
   ];
 
   void initState() {
