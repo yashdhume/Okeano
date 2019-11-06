@@ -68,19 +68,19 @@ class _HomePage extends State<HomePage> {
                       child: SliverTabs(title: "Recommed for you")),
                   SliverList(
                       delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                    return StreamBuilder(
-                        stream: Firestore.instance
-                            .collection('reccomended')
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) CircularProgressIndicator();
-                          return RecommendedProducts(
-                              index: index, snapshot: snapshot);
-                        });
-                  },
-                          //childCount: Future.value(Firestore.instance.collection('products').snapshots().length),
-                          childCount: 8))
+                    (BuildContext context, int index) {
+                      return StreamBuilder(
+                          stream: Firestore.instance
+                              .collection('reccomended')
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) CircularProgressIndicator();
+                            return RecommendedProducts(
+                                index: index, snapshot: snapshot);
+                          });
+                    },
+                    childCount: 8,
+                  ))
                 ],
               ),
             )));

@@ -43,8 +43,7 @@ class ProductInfoPage extends StatelessWidget {
                     image,
                     fit: BoxFit.cover,
                   ))),
-          SafeArea(
-              child: Column(
+          Column(
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -151,7 +150,7 @@ class ProductInfoPage extends StatelessWidget {
                 ),
               )
             ],
-          ))
+          )
         ],
       ),
     );

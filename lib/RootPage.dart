@@ -17,7 +17,6 @@ class RootPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("drawing Main Page");
 
     FirebaseAnalytics analytics = FirebaseAnalytics();
 
@@ -32,13 +31,9 @@ class RootPage extends StatelessWidget {
             future: AuthService().getUser,
             builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                print("drawing main: target screen" +
-                    snapshot.connectionState.toString());
                 final bool loggedIn = snapshot.hasData;
                 return loggedIn ? MainPage() : LoginPage();
-              } else {
-                print("drawing main: loading circle" +
-                    snapshot.connectionState.toString());
+              } else {;
                 return LoadingCircle();
               }
             }),
