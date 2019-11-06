@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'ui/MainPage.dart';
 import 'ViewModel.dart';
+import 'SplashPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
             primaryColor: Color(0xff4169E1),
             accentColor: Colors.cyan[600],
           ),
-          home: MainPage(),
+          home: SplashPage(),
         ));
   }
 }

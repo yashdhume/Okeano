@@ -31,7 +31,7 @@ class _Search extends State<Search> {
   @override
   void initState() {
     postsController = StreamController();
-    timer = Timer.periodic(Duration(seconds: 5), (Timer t) => handleRefresh());
+    timer = Timer.periodic(Duration(seconds: 1), (Timer t) => handleRefresh());
     super.initState();
   }
 
