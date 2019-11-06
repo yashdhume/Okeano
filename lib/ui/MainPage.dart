@@ -5,9 +5,13 @@ import '../ViewModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'HomePage.dart';
-import 'package:okeano/ui/ProfilePage.dart';
-import 'package:okeano/ui/FavoritePage.dart';
+import 'package:okeano/ui/User/ProfilePage.dart';
+import 'package:okeano/ui/User/FavoritePage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:okeano/data/Authentication.dart';
 class MainPage extends StatefulWidget {
+
   _MainPage createState() => new _MainPage();
 }
 
@@ -22,6 +26,7 @@ class _MainPage extends State<MainPage> {
   ];
 
   void initState() {
+    ViewModel().getUser();
     super.initState();
   }
 

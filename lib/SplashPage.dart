@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ui/MainPage.dart';
+import 'RootPage.dart';
 import 'package:http/http.dart';
 class SplashPage extends StatefulWidget {
   @override
@@ -27,7 +27,7 @@ class _SplashPage extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
 
-    if(killSwitch=='true') return MainPage();
+    if(killSwitch=='true') return RootPage();
     return Container(color: Colors.white,child: Center(child: Image.network('https://okeanosgroup.cf/images/okeanoWordLogo.png')));
   }
 }
