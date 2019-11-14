@@ -68,8 +68,8 @@ class _ProfileState extends State<Profile> {
                         children: <Widget>[
                           Text(emailId),
                           SizedBox(height: 10),
-                          Text(userUuid),
-                          SizedBox(height: 10),
+                         // Text(userUuid),
+                          //SizedBox(height: 10),
                         ],
                       ),
                     ),

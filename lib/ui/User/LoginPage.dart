@@ -6,6 +6,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:okeano/ui/MainPage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+// ignore: constant_identifier_names
 enum FormType { LOGIN, REGISTER }
 
 class LoginPage extends StatefulWidget {
@@ -41,12 +42,9 @@ class _LoginPageState extends State<LoginPage> {
   void submit(BuildContext context) async {
     if (validate()) {
       try {
-        //final auth = Provider.of(context).auth;
         if (_formType == FormType.LOGIN) {
-          // Login user using firebase API
           await AuthService().loginUser(email: _email, password: _password);
         } else {
-          // Create New User user using firebase API
           await AuthService().createUser(
 
               email: _email,
@@ -92,18 +90,18 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _logo() {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(10),
       child: ClipRRect(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(25.0),
-          topRight: Radius.circular(25.0),
-          bottomRight: Radius.circular(25.0),
-          bottomLeft: Radius.circular(25.0),
+          topLeft: Radius.circular(10.0),
+          topRight: Radius.circular(10.0),
+          bottomRight: Radius.circular(10.0),
+          bottomLeft: Radius.circular(10.0),
         ),
         child: Align(
-            alignment: Alignment.bottomRight,
+            //alignment: Alignment.bottomRight,
             child: Image.network(
-                'https://okeanosgroup.cf/images/okeanoWordLogo.png')),
+                'https://scontent.fykz1-1.fna.fbcdn.net/v/t1.15752-9/s2048x2048/74667362_2354525834673690_3024004924569550848_n.png?_nc_cat=103&_nc_oc=AQmQnltoRS-ooHbz4tlvDnhXRYKJuNgFaDEpUfd76W4xaJhZZ-pvrgtLntCOIf68FecX3cNwjjjErl-AmzKqiPhk&_nc_ht=scontent.fykz1-1.fna&oh=04637bd2fbc2c8c080cb308007b01cc4&oe=5E427E74')),
       ),
     );
   }
@@ -139,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                               [
                                 Padding(
                                     padding: EdgeInsets.only(
-                                        left: 20, right: 20, top: 30),
+                                        left: 10, right: 10, top: 10),
                                     child:
                                         Column(children: buildButtons(context)))
                               ],
@@ -389,3 +387,4 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 }
+

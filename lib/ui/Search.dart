@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import '../ViewModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:async';
+import 'dart:convert';
 import 'package:okeano/data/Parser.dart';
 import 'package:okeano/ui/Widgets/BuildSearchProductList.dart';
+import 'package:http/http.dart' as http;
 
 final myController = TextEditingController();
 StreamController postsController;
@@ -16,8 +18,20 @@ class Search extends StatefulWidget {
   @override
   _Search createState() => _Search();
 }
+var logoData;
 
 class _Search extends State<Search> {
+
+
+
+  Future<void> getData() async {
+    http.Response response = await http.get(
+        "http://vincentssecretspot.tk/okeano/logos.json");
+       // headers: {"Accept": "application/json"});
+    setState(() {
+      logoData = json.decode(response.body);
+    });
+  }
   Timer timer;
 
   @override
@@ -30,8 +44,9 @@ class _Search extends State<Search> {
 
   @override
   void initState() {
+    getData();
     postsController = StreamController();
-    timer = Timer.periodic(Duration(seconds: 1), (Timer t) => handleRefresh());
+    timer = Timer.periodic(Duration(seconds: 5), (Timer t) => handleRefresh());
     super.initState();
   }
 
@@ -56,7 +71,7 @@ class _Search extends State<Search> {
                           builder:
                               // ignore: missing_return
                               (BuildContext context, AsyncSnapshot snapshot) {
-                            reassemble();
+                            //reassemble();
                             if (snapshot.hasError) {
                               return Text(snapshot.error);
                             }

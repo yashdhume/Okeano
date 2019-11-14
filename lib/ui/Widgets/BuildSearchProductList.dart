@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:okeano/data/Parser.dart';
 import 'package:okeano/ui/ProductWidgets/ProductInfoPage.dart';
 
+import 'package:okeano/ui/Search.dart';
+
+
+
 Widget buildList(AsyncSnapshot snapshot, BuildContext context) {
+
   return Scrollbar(
       child: RefreshIndicator(
     child: ListView.builder(
@@ -13,7 +18,7 @@ Widget buildList(AsyncSnapshot snapshot, BuildContext context) {
           return GestureDetector(
               onTap: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute<Null>(builder: (BuildContext context) {
+                    MaterialPageRoute(builder: (context) {
                   return ProductInfoPage(
                     image: product['image'],
                     name: product['name'],
@@ -42,7 +47,7 @@ Widget buildList(AsyncSnapshot snapshot, BuildContext context) {
                         child: Container(
                           width: 50,
                           height: 50,
-                          margin: EdgeInsets.only(right: 15),
+                          margin: EdgeInsets.all(15),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
                             border: Border.all(width: 3, color: Colors.white),
@@ -79,12 +84,37 @@ Widget buildList(AsyncSnapshot snapshot, BuildContext context) {
                           ),
                         ],
                       ),
+                    ),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      margin: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                        border: Border.all(width: 100, color: Colors.white),
+                        image: DecorationImage(
+                            image: NetworkImage(getLogo(product)),
+                            fit: BoxFit.contain),
+                      ),
                     )
                   ],
                 ),
               ));
         }),
     // ignore: missing_return
-    onRefresh: () {},
+    onRefresh: () {handleRefresh();},
   ));
+
+}
+String getLogo(var product){
+
+  for(int i = 0; i < logoData.length; i++){
+    print(logoData.length);
+    if(logoData[i]['store'] == product['store']){
+      return logoData[i]['image'];
+    }
+  }
+  return 'http://amspec.ph/products/amspec/JC12.jpg';
+  product['store'];
+
 }

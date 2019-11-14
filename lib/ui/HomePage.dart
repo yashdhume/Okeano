@@ -74,9 +74,12 @@ class _HomePage extends State<HomePage> {
                               .collection('reccomended')
                               .snapshots(),
                           builder: (context, snapshot) {
-                            if (!snapshot.hasData) CircularProgressIndicator();
-                            return RecommendedProducts(
+                            if (snapshot.hasError) return CircularProgressIndicator();
+                            else if (!snapshot.hasData) return CircularProgressIndicator();
+                            else {
+                              return RecommendedProducts(
                                 index: index, snapshot: snapshot);
+                            }
                           });
                     },
                     childCount: 8,
