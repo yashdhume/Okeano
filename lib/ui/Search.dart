@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import '../ViewModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:async';
-import 'dart:convert';
-import 'package:okeano/data/Parser.dart';
+//import 'package:okeano/data/Parser.dart';
 import 'package:okeano/ui/Widgets/BuildSearchProductList.dart';
+import 'package:adhara_socket_io/adhara_socket_io.dart';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 final myController = TextEditingController();
 StreamController postsController;
 String searchQuery;
-bool isOn = false;
 
+SocketIOManager manager;
+Map<String, SocketIO> sockets = {};
+Map<String, bool> _isProbablyConnected = {};
+bool isOn=false;
+SocketIO socket;
 class Search extends StatefulWidget {
   Search({Key key}) : super(key: key);
 
@@ -21,16 +25,49 @@ class Search extends StatefulWidget {
 var logoData;
 
 class _Search extends State<Search> {
-
-
-
   Future<void> getData() async {
     http.Response response = await http.get(
         "http://vincentssecretspot.tk/okeano/logos.json");
-       // headers: {"Accept": "application/json"});
+    // headers: {"Accept": "application/json"});
     setState(() {
       logoData = json.decode(response.body);
     });
+  }
+  initSocket(String identifier) async {
+    ViewModel model = ScopedModel.of(this.context);
+
+    setState(() => _isProbablyConnected[identifier] = true);
+    socket = await manager.createInstance(SocketOptions(
+      //Socket IO server URI
+      "http://okeano.herokuapp.com",
+    ));
+    socket.onConnect((data) {
+      print("connected...");
+      socket.emit("search", ["chair"]);
+      print(data);
+    });
+    socket.on("product", (curData){
+      pprint(curData, model);
+    });
+    /*socket.on("resultType", (data){
+      pprint(data, model);
+    })*/;
+    socket.connect();
+    sockets[identifier] = socket;
+  }
+  bool isProbablyConnected(String identifier){
+    return _isProbablyConnected[identifier]??false;
+  }
+  pprint(data, model) {
+   setState(() {
+    //  print("Model: " + data.toString());
+      model.addData(data);
+      //model.data.add(data);
+   });
+  }
+  disconnect(String identifier) async {
+    await manager.clearInstance(sockets[identifier]);
+    setState(() => _isProbablyConnected[identifier] = false);
   }
   Timer timer;
 
@@ -44,9 +81,13 @@ class _Search extends State<Search> {
 
   @override
   void initState() {
-    getData();
+   // getData();
+
+    manager = SocketIOManager();
+    initSocket("default");
     postsController = StreamController();
-    timer = Timer.periodic(Duration(seconds: 5), (Timer t) => handleRefresh());
+    //timer = Timer.periodic(Duration(seconds: 1), (Timer t) => handleRefresh());
+
     super.initState();
   }
 
@@ -62,36 +103,13 @@ class _Search extends State<Search> {
                   width: MediaQuery.of(context).size.width,
                   child: Stack(
                     children: <Widget>[
-                      Container(
+
+                     Container(
                         padding: EdgeInsets.only(top: 145),
                         height: MediaQuery.of(context).size.height,
                         width: double.infinity,
-                        child: StreamBuilder(
-                          stream: postsController.stream,
-                          builder:
-                              // ignore: missing_return
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            //reassemble();
-                            if (snapshot.hasError) {
-                              return Text(snapshot.error);
-                            }
-                            if (snapshot.hasData) {
-                              return buildList(snapshot, context);
-                            }
-                            if (snapshot.connectionState !=
-                                ConnectionState.done) {
-                              return Center(
-                                child: indicator(),
-                              );
-                            }
+                        child: model.data.length!=null ? buildList(context) : CircularProgressIndicator()
 
-                            if (!snapshot.hasData &&
-                                snapshot.connectionState ==
-                                    ConnectionState.done) {
-                              return Text('No Posts');
-                            }
-                          },
-                        ),
                       ),
                       Container(
                         height: 140,
@@ -139,9 +157,9 @@ class _Search extends State<Search> {
                                   textInputAction: TextInputAction.go,
                                   onSubmitted: (myController) {
                                     setState(() {
-                                      model.updateSearchQuery(myController);
+                                 //     model.updateSearchQuery(myController);
                                       print(10);
-                                      searchQuery = model.searchQuery;
+                                  //    searchQuery = model.searchQuery;
                                       isOn = true;
                                     });
                                   },

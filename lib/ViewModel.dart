@@ -1,6 +1,7 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
+import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ViewModel extends Model {
@@ -8,6 +9,13 @@ class ViewModel extends Model {
   String userName="";
   String emailId="";
   String userUuid="";
+  List<Map<String, dynamic>> data = [];
+
+  ViewModel(){
+    print("hi WE IN");
+    print(data);
+  }
+
   void getUser() {
     firebaseAuth.onAuthStateChanged
         .firstWhere((user) => user != null)
@@ -19,6 +27,17 @@ class ViewModel extends Model {
     });
     notifyListeners();
     print(emailId);
+  }
+  List<Map<String, dynamic>> getData(){
+    notifyListeners();
+    return data;
+  }
+  void addData(Map<String, dynamic> str){
+    print("add");
+    print(data.length);
+    //str.forEach((k,v) => print('${k}: ${v}'));
+    data.add(str);
+    notifyListeners();
   }
 
   Future<http.Response> sendRequest(String product) {
